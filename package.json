@@ -9,24 +9,19 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/NamVr/DiscordBot-Template.git"
+		"url": "git+https://github.com/MennoHorizo/Reado.git"
 	},
 	"keywords": [
 		"discord-js"
 	],
-	"author": "Naman Vrati",
-	"license": "ISC",
-	"bugs": {
-		"url": "https://github.com/NamVr/DiscordBot-Template/issues"
-	},
-	"homepage": "https://github.com/NamVr/DiscordBot-Template#readme",
 	"dependencies": {
-		"@discordjs/builders": "^0.6.0",
-		"@discordjs/rest": "^0.1.0-canary.0",
-		"discord-api-types": "^0.22.0",
-		"discord.js": "^13.1.0"
+		"@discordjs/builders": "^0.11.0",
+		"@discordjs/rest": "^0.2.0-canary.0",
+		"discord-api-types": "^0.26.1",
+		"discord.js": "^13.5.1"
 	},
 	"devDependencies": {
-		"nodemon": "^2.0.12"
+		"@types/node": "^17.0.8",
+		"nodemon": "^2.0.15"
 	}
 }

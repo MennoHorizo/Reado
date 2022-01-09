@@ -1,9 +1,3 @@
-/**
- * @file Slash Command Interaction Handler
- * @author Naman Vrati
- * @since 3.0.0
- */
-
 module.exports = {
 	name: "interactionCreate",
 

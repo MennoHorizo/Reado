@@ -1,9 +1,3 @@
-/**
- * @file Sample ping command
- * @author Naman Vrati
- * @since 1.0.0
- */
-
 module.exports = {
 	name: "ping",
 

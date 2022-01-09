@@ -1,9 +1,3 @@
-/**
- * @file Sample button interaction
- * @author Naman Vrati
- * @since 3.0.0
- */
-
 module.exports = {
 	id: "sample",
 

@@ -1,9 +1,3 @@
-/**
- * @file Command reloader
- * @author Naman Vrati
- * @since 1.0.0
- */
-
 // "fs" declared is used in reloading command cache of the specified command.
 const fs = require("fs");
 
