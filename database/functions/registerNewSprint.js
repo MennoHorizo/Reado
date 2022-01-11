@@ -1,9 +1,9 @@
-//const { client } = require('../connection')
+const { server } = require('../connection')
 
 module.exports = {
     createSprint(duration, offset, serverid, channelname) {
         try {
-            client.set(`sprint://${serverid}/${channelname}`, '', (err, reply) => {
+            server.set(`sprint://${serverid}/${channelname}`, '', (err, reply) => {
                 if (err) throw err;
                 console.log(reply);
             })
