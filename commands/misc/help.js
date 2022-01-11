@@ -8,7 +8,7 @@ module.exports = {
 	name: "help",
 	description: "List all commands of bot or info about a specific command.",
 	aliases: ["commands"],
-	usage: "[command name]",
+	usage: "",
 	cooldown: 5,
 
 	/**
@@ -19,7 +19,7 @@ module.exports = {
 	 */
 
 	execute(message, args) {
-		const { commands } = message.client;
+		const { commands, client} = message.client;
 
 		// If there are no args, it means it needs whole help command.
 
@@ -31,41 +31,15 @@ module.exports = {
 
 			let helpEmbed = new MessageEmbed()
 				.setColor(0x4286f4)
-				.setURL(process.env.URL)
 				.setTitle("List of all my commands")
 				.setDescription(
 					"`" + commands.map((command) => command.name).join("`, `") + "`"
 				)
-
 				.addField(
 					"Usage",
 					`\nYou can send \`${prefix}help [command name]\` to get info on a specific command!`
-				);
-
-			// Attempts to send embed in DMs.
-
-			return message.author
-				.send({ embeds: [helpEmbed] })
-
-				.then(() => {
-					if (message.channel.type === "dm") return;
-
-					// On validation, reply back.
-
-					message.reply({
-						content: "I've sent you a DM with all my commands!",
-					});
-				})
-				.catch((error) => {
-					// On failing, throw error.
-
-					console.error(
-						`Could not send help DM to ${message.author.tag}.\n`,
-						error
-					);
-
-					message.reply({ content: "It seems like I can't DM you!" });
-				});
+				)
+			message.channel.send({embeds: [helpEmbed]})
 		}
 
 		// If argument is provided, check if it's a command.
