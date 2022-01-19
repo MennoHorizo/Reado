@@ -1,6 +1,3 @@
-// Deconstructing prefix from config file to use in help command
-const { prefix } = require("../../config.json");
-
 const createSprint = require('../../functions/createSprint');
 const getRandomEmojis = require('../../functions/getRandomEmoji');
 const startSprint = require('../../functions/startSprint')

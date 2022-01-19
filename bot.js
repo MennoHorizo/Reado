@@ -1,10 +1,13 @@
 // Declare constants which will be used throughout the bot.
-
+require('dotenv').config();
 const fs = require("fs");
 const { Client, Collection, Intents } = require("discord.js");
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v9");
-const { token, client_id, test_guild_id } = require("./config.json");
+const 	token = process.env.TOKEN, 
+		client_id = process.env.CLIENTID,
+		test_guild_id = process.env.TESTSERVERID
+
 const { startConnection } = require('./database/functions/startConnection');
 
 /**
