@@ -1,22 +1,29 @@
 const { server } = require('../connection')
 
 module.exports = {
-    addUserToSprint(userid, username, starting_lc, serverid, channelname) {
+    async addUserToSprint(userid, username, starting_lc, serverid, channelname) {
         try {
             //getting previous users added if there are any
-            let values = server.get(`sprint://${serverid}/${channelname}`);
+            let values = await server.get(`sprint://${serverid}/${channelname}`);
+            if (values != null && values != undefined && values != '') {
+                const valuess = values.split('//')
+                values = valuess;
+            } else {
+                values = [];
+            }
+
 
             //add new one into the array
-            values = [...values, {"userid": userid, "username": username, "lc": starting_lc}]
-            let stringValues = values.toString();
-
-            //sets it in the db
-            server.set(`sprint://${serverid}/${channelname}`, stringValues, (err, reply) => {
+            values.push(`{userid: ${userid}, username: ${username}, lc: ${starting_lc}}//`)
+            cleanArray = values.filter(Boolean);
+            console.log(cleanArray)
+            let stringValues = cleanArray.toString();
+            await server.set(`sprint://${serverid}/${channelname}`, stringValues, (err, reply) => {
                 if (err) throw err;
                 console.log(reply);
             })
         } catch (err) {
-            return err
+            console.log(err)
         }
     }
 }

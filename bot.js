@@ -1,9 +1,3 @@
-/**
- * @file Main File of the bot, responsible for registering events, commands, interactions etc.
- * @author Naman Vrati
- * @version 3.0.0
- */
-
 // Declare constants which will be used throughout the bot.
 
 const fs = require("fs");
@@ -11,6 +5,7 @@ const { Client, Collection, Intents } = require("discord.js");
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v9");
 const { token, client_id, test_guild_id } = require("./config.json");
+const { startConnection } = require('./database/functions/startConnection');
 
 /**
  * From v13, specifying the intents is compulsory.
@@ -226,6 +221,10 @@ for (const folder of triggerFolders) {
 		client.triggers.set(trigger.name, trigger);
 	}
 }
+
+//start DB connection
+
+startConnection()
 
 // Login into your client application with bot's token.
 

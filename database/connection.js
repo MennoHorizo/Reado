@@ -1,11 +1,26 @@
 const redis = require('redis');
-const server = redis.createClient({
-    host: 'redis-16346.c2.eu-west-1-3.ec2.cloud.redislabs.com',
-    port: '16346',
-    password: process.env.REDIS_PASSWORD
+const server = redis.createClient();
+
+server.on('connect', () => {
+  console.log('Redis server trying to connect.');
 });
 
-server.on('error', err => {
-    console.log('Error ' + err);
+server.on('ready', () => {
+  console.log('Redis server is online!');
+  server.flushAll()
+})
+
+server.on('reconnecting', () => {
+  console.log(`Redis server trying to reconnect!`)
 });
-module.exports = { server, redis }
+
+
+server.on('error', (err) => {
+  console.log('Redis server error: ', err)
+});
+
+server.on('quit', () => {
+  console.log('Redis server quited.')
+});
+
+module.exports = {server}

@@ -3,9 +3,12 @@ const { prefix } = require("../../config.json");
 
 const createSprint = require('../../functions/createSprint');
 const getRandomEmojis = require('../../functions/getRandomEmoji');
+const startSprint = require('../../functions/startSprint')
+const uuid = require('uuid');
 
 // Deconstructing MessageEmbed to create embeds within this command
 const { MessageEmbed } = require("discord.js");
+const { start } = require("repl");
 
 module.exports = {
 	name: "readsprint",
@@ -60,23 +63,73 @@ module.exports = {
 				//!readsprint random between 5 10
 				const randomDuration = Math.floor(Math.random() * (min - max + 1) ) + min;
 			} else {
-				//!readsprint random
+				let id = uuid.v4();
+				/*
+
+										!readsprint random
+
+				*/
 				const randomDuration = Math.floor(Math.random() * 30) + 1;
 				const emoji = getRandomEmojis.randomEmoji();
+				const user = message.author;
 				const Embed = new MessageEmbed()
 					.setColor('#1bd321')
 					.setTitle('Succes!')
-					.setDescription(`Er wordt een sprint gestart van ${randomDuration} minuten!`)
+					.setDescription(`
+					${emoji} **Join the sprint!** ${emoji}
+					\n\n
+					Er wordt een sprint gestart van ${randomDuration} minuten in 1 minuut!
+					Join with **_join** {jouw line count}! 
+					\n\n\n\n
+					Sprint started door <@${user.id}>!
+					`)
+					.addFields(
+						{ name: '\u200B', value: '\u200B' },
+						{ name: 'ID', value: `${id}`, inline: true }
+					)
 					.setTimestamp()
 					.setFooter({text: `Message send from ${client.user.tag}!`})
 				message.channel.send({embeds: [Embed]})
-				/**
-				** @param {durations} duration of the sprint
-				 */
+
+				//Actually starting the sprint, probably need to send another 
+				//embed that the sprint started and that you can join
+
+				/*
+					What I might do: this one is the sign so you start joining, 
+					and then the other embed is the one where it will actually 
+					start for the @duration of the sprint
+
+					And when it's finished 2 embeds again, one for saying that the sprint is 
+					over and that you need to give your final lc
+
+					And then another in 2 minutes or another time, with the results
+				*/
 				let serverid = message.guild.id;
 				let channelname = message.channel.name;
-				console.log(serverid, channelname)
-				createSprint.createSprint(randomDuration, 60, serverid, channelname)
+				createSprint.createSprint(randomDuration, 60, serverid, channelname, id)
+				setTimeout(() => {
+					startSprint.startSprint(serverid, channelname, id, randomDuration)
+
+					//Sending Embed in the channel of the sprint
+					const Embed = new MessageEmbed()
+						.setColor('#1bd321')
+						.setTitle('Succes!')
+						.setDescription(`
+						${emoji} **De sprint is van start gegaan!** ${emoji}
+						\n\n
+						Je hebt nu **${randomDuration}** minuten de tijd om te lezen!
+						Succes!
+						\n\n\n\n
+						Deze sprint is gestart door <@${user.id}>!
+						`)
+						.addFields(
+							{ name: '\u200B', value: '\u200B' },
+							{ name: 'ID', value: `${id}`, inline: true }
+						)
+						.setTimestamp()
+						.setFooter({text: `Message send from ${client.user.tag}!`})
+					message.channel.send({embeds: [Embed]})
+				}, 60000)//000
 			}
 		} else {
 			//creating embeded

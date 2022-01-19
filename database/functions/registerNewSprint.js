@@ -1,9 +1,12 @@
-const { server } = require('../connection')
+const client = require('../connection')
 
 module.exports = {
-    createSprint(duration, offset, serverid, channelname) {
+    async createSprint(duration, offset, serverid, channelname, sprintid) {
         try {
-            server.set(`sprint://${serverid}/${channelname}`, '', (err, reply) => {
+            await client.del(`sprint://${serverid}/${channelname}`);
+            setTimeout(() => {}, 360)
+            await client.set(`sprint://${serverid}/${channelname}`, '', (err, reply) => {
+                console.log('haii')
                 if (err) throw err;
                 console.log(reply);
             })

@@ -1,7 +1,6 @@
-// Deconstructing prefix from config file to use in help command
-const { prefix } = require("../../config.json");
-
 const addNewUserToSprint = require('../../functions/addUser')
+const checkForSprint = require('../../database/functions/checkForSprint')
+const checkForUser = require('../../database/functions/checkIfUserAlreadyExists')
 
 // Deconstructing MessageEmbed to create embeds within this command
 const { MessageEmbed } = require("discord.js");
@@ -13,13 +12,29 @@ module.exports = {
 	usage: "",
 	cooldown: 2,
 
-	execute(message, arguments) {
+	async execute(message, arguments) {
 		const client = message.client;
 
 		const userid = message.member.user.id;
 		const username = message.member.user.username;
 		const serverid = message.guild.id;
 		const channelname = message.channel.name
+
+		const sprintActive = await checkForSprint.check(serverid, channelname)
+		console.log(sprintActive)
+
+		if (sprintActive == false) {
+			const Embed = new MessageEmbed()
+				.setColor('#d33a1b')
+				.setTitle('Error')
+				.setDescription('Er is geen sprint gaande in dit kanaal! Start er een met **!readsprint**')
+				.setTimestamp()
+				.setFooter({text: `Message send from ${client.user.tag}!`})
+		
+			//sending it
+			message.channel.send({embeds: [Embed]})
+			return
+		}
 
 		let starting_lc;
 		if (arguments[0] != '' || arguments[0] == undefined) {
