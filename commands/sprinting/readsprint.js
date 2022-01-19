@@ -60,7 +60,6 @@ module.exports = {
 				//!readsprint random between 5 10
 				const randomDuration = Math.floor(Math.random() * (min - max + 1) ) + min;
 			} else {
-				let id = uuid.v4();
 				/*
 
 										!readsprint random
@@ -80,10 +79,6 @@ module.exports = {
 					\n\n\n\n
 					Sprint started door <@${user.id}>!
 					`)
-					.addFields(
-						{ name: '\u200B', value: '\u200B' },
-						{ name: 'ID', value: `${id}`, inline: true }
-					)
 					.setTimestamp()
 					.setFooter({text: `Message send from ${client.user.tag}!`})
 				message.channel.send({embeds: [Embed]})
@@ -103,9 +98,9 @@ module.exports = {
 				*/
 				let serverid = message.guild.id;
 				let channelname = message.channel.name;
-				createSprint.createSprint(randomDuration, 60, serverid, channelname, id)
+				createSprint.createSprint(randomDuration, 60, serverid, channelname)
 				setTimeout(() => {
-					startSprint.startSprint(serverid, channelname, id, randomDuration)
+					startSprint.startSprint(serverid, channelname, randomDuration)
 
 					//Sending Embed in the channel of the sprint
 					const Embed = new MessageEmbed()
@@ -119,10 +114,6 @@ module.exports = {
 						\n\n\n\n
 						Deze sprint is gestart door <@${user.id}>!
 						`)
-						.addFields(
-							{ name: '\u200B', value: '\u200B' },
-							{ name: 'ID', value: `${id}`, inline: true }
-						)
 						.setTimestamp()
 						.setFooter({text: `Message send from ${client.user.tag}!`})
 					message.channel.send({embeds: [Embed]})

@@ -21,6 +21,7 @@ module.exports = {
 		const channelname = message.channel.name
 
 		const sprintActive = await checkForSprint.check(serverid, channelname)
+		const userJoinedAlready = await checkForUser.check(serverid, channelname, userid)
 		console.log(sprintActive)
 
 		if (sprintActive == false) {
@@ -30,7 +31,20 @@ module.exports = {
 				.setDescription('Er is geen sprint gaande in dit kanaal! Start er een met **!readsprint**')
 				.setTimestamp()
 				.setFooter({text: `Message send from ${client.user.tag}!`})
-		
+			//sending it
+			message.channel.send({embeds: [Embed]})
+			return
+		}
+		console.log(userJoinedAlready)
+
+		if (userJoinedAlready == true) {
+			const Embed = new MessageEmbed()
+			.setColor('#d33a1b')
+			.setTitle('Error')
+			.setDescription(`You already joined this sprint! <@${userid}>`)
+			.setTimestamp()
+			.setFooter({text: `Message send from ${client.user.tag}!`})
+	
 			//sending it
 			message.channel.send({embeds: [Embed]})
 			return
@@ -53,5 +67,15 @@ module.exports = {
 		}
 
 		addNewUserToSprint.addUser(userid, username, starting_lc, serverid, channelname)
+
+		const Embed = new MessageEmbed()
+			.setColor('#1bd321')
+			.setTitle('Succes!')
+			.setDescription(`Je hebt de sprint gejoined met **${starting_lc}**! <@${userid}>`)
+			.setTimestamp()
+			.setFooter({text: `Message send from ${client.user.tag}!`})
+		//sending it
+		message.channel.send({embeds: [Embed]})
+		return
 	}
 };

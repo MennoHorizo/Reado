@@ -3,11 +3,11 @@ const server = redis.createClient();
 
 server.on('connect', () => {
   console.log('Redis server trying to connect.');
+  server.flushAll()
 });
 
 server.on('ready', () => {
   console.log('Redis server is online!');
-  server.flushAll()
 })
 
 server.on('reconnecting', () => {
