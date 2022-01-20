@@ -8,18 +8,11 @@ module.exports = {
         }
         let cleanA = sprintData.split('/').filter(Boolean);
         for (let i =0; i < cleanA.length; i++) {
-            console.log('i = ', i)
-            console.log(cleanA[i])
-            cleanA[i] = cleanA[i].replace(';', ',')
-            console.log(cleanA[i])
+            cleanA[i] = cleanA[i].replace(/;/g, ",");
+            cleanA[i] = JSON.parse(cleanA[i]);
+            if (cleanA[i].userid == userid) {
+                return true
+            } else return false
         }
-        console.log(cleanA)
-        let newData = []
-        console.log(userid)
-        console.log('newData: ', newData)
-        let userIsIn = newData.filter(function (str) { return str.indexOf(userid) === -1; });
-        if (userIsIn != undefined || userIsIn != '' || userIsIn != null || userIsIn != NaN) {
-            return true;
-        } else return false;
     }   
 }

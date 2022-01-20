@@ -41,7 +41,7 @@ module.exports = {
 			const Embed = new MessageEmbed()
 			.setColor('#d33a1b')
 			.setTitle('Error')
-			.setDescription(`You already joined this sprint! <@${userid}>`)
+			.setDescription(`je heb deze sprint al gejoined! <@${userid}>`)
 			.setTimestamp()
 			.setFooter({text: `Message send from ${client.user.tag}!`})
 	
@@ -71,7 +71,7 @@ module.exports = {
 		const Embed = new MessageEmbed()
 			.setColor('#1bd321')
 			.setTitle('Succes!')
-			.setDescription(`Je hebt de sprint gejoined met **${starting_lc}**! <@${userid}>`)
+			.setDescription(`Je hebt de sprint gejoined met **${starting_lc}** regels! <@${userid}>`)
 			.setTimestamp()
 			.setFooter({text: `Message send from ${client.user.tag}!`})
 		//sending it
